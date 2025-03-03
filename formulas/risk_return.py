@@ -3,7 +3,7 @@ from statsmodels.stats.weightstats import DescrStatsW
 
 class RiskReturnEvaluator:
     """
-    A utility class for evaluating risk and return metrics for securities and portfolios.
+    A utility class for evaluating risk and return metrics for securities.
 
     This class provides methods to calculate:
     - Return on a security (including cash flows)
