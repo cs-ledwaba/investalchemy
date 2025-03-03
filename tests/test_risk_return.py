@@ -47,13 +47,3 @@ def test_volatility_with_given_probabilities():
     expected_ans = 0.1068
     result = evaluator.volatility(returns, probabilities)
     assert round(result, 4) == expected_ans
-
-
-# def test_annualized_volatility():
-#     """
-#     Test the annualized_volatility method with monthly volatility.
-#     """
-#     monthly_volatility = 0.05
-#     expected_ans = 0.1732
-#     result = evaluator.vol(monthly_volatility, time_period=12)
-#     assert round(result, 4) == expected_ans
