@@ -10,7 +10,7 @@ class PortfolioLevelEvaluator:
     - Volatility (standard deviation) 
     """
     @staticmethod
-    def portfolio_return(weights: list[float], returns: list[float]) -> float:
+    def calculate_portfolio_return(weights: list[float], returns: list[float]) -> float:
         """
         Calculates the return of a portfolio using the weighted average of the asset returns.
         Args:
@@ -22,27 +22,27 @@ class PortfolioLevelEvaluator:
         return np.dot(weights, returns)
     
     @staticmethod
-    def covariance_between_a_and_b(returns_asset_a: list[float], returns_asset_b: list[float]) -> np.ndarray:
+    def calculate_covariance_matrix(return_of_assets: list[list[float]]) -> np.ndarray:
         """
-        Calculates the covariance between the returns of two assets.
+        Calculates the covariance matrix of asset returns.
         Args:
-            returns_asset_a: The returns of the first asset.
-            returns_asset_b: The returns of the second asset.
+            return_of_assets: The returns of the assets in the portfolio.
         Returns:
-            np.ndarray: The covariance value.
+            np.ndarray: The covariance matrix.
         """
-        return np.cov(returns_asset_a, returns_asset_b)[0][1]
+        return np.cov(np.array(return_of_assets))
+    
     @staticmethod
-    def correlation_between_a_and_b(returns_asset_a: list[float], returns_asset_b: list[float]) -> float:
+    def calculate_correlation_matrix(return_of_assets: list[list[float]]) -> np.ndarray:
         """
-        Calculates the correlation between the returns of two assets.
+        Calculates the covariance matrix of asset returns.
         Args:
-            returns_asset_a: The returns of the first asset.
-            returns_asset_b: The returns of the second asset.
+            return_of_assets: The returns of the assets in the portfolio.
         Returns:
-            float: The correlation coefficient.
+            np.ndarray: The covariance matrix.
         """
-        return np.corrcoef(returns_asset_a, returns_asset_b)[0][1]
+        return np.corrcoef(np.array(return_of_assets))
+    
     @staticmethod
     def calculate_portfolio_risk(weights: list[float], return_of_assets: list[list[float]]) -> float:
         """
@@ -53,6 +53,6 @@ class PortfolioLevelEvaluator:
         Returns:
             float: The portfolio risk (standard deviation).
         """
-        covariance_matrix = np.cov(np.array(return_of_assets))
+        covariance_matrix = PortfolioLevelEvaluator.calculate_covariance_matrix(return_of_assets)
         variance = np.dot(weights, np.dot(covariance_matrix, weights))
         return np.sqrt(variance)
