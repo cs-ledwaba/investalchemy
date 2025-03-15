@@ -1,5 +1,7 @@
-from math import sqrt, prod
+from math import prod, sqrt
+
 from statsmodels.stats.weightstats import DescrStatsW
+
 
 class RiskReturnEvaluator:
     """
@@ -14,12 +16,14 @@ class RiskReturnEvaluator:
     @staticmethod
     def return_on_security(v0: float, v1: float, cash_flows: float) -> float:
         """
-        Calculates the return on a security, accounting for cash flows received during the investment period.
+        Calculates the return on a security, accounting for cash flows received during
+        the investment period.
 
         Args:
             v0: The initial value of the security (price at t=0).
             v1: The value of the security at the end of the investment horizon.
-            cash_flows: Cash flows received during the investment period (e.g., dividends, coupons).
+            cash_flows: Cash flows received during the investment period
+                        (e.g., dividends, coupons).
 
         Returns:
             float: The return on investment (ROI) as a decimal (e.g., 0.05 for 5%).
@@ -29,10 +33,12 @@ class RiskReturnEvaluator:
     @staticmethod
     def geometric_mean_return(returns: list[float]) -> float:
         """
-        Calculates the geometric mean return, which represents the average return per period over a multi-period investment.
+        Calculates the geometric mean return, which represents the average return per
+        period over a multi-period investment.
 
         Args:
-            returns: A list of percentage returns (e.g., [0.05, 0.02, -0.03] for 5%, 2%, -3%).
+            returns: A list of percentage returns
+                    (e.g., [0.05, 0.02, -0.03] for 5%, 2%, -3%).
 
         Returns:
             float: The geometric mean return as a decimal (e.g., 0.04 for 4%).
@@ -47,19 +53,25 @@ class RiskReturnEvaluator:
 
         growth_factors = [1 + r for r in returns]
         product_of_growth_factors = prod(growth_factors)
-        n = len(returns)  # Number of periods is determined by the length of the returns list
+        n = len(
+            returns
+        )  # Number of periods is determined by the length of the returns list
         return product_of_growth_factors ** (1 / n) - 1
+
     @staticmethod
-    def annualized_geometric_mean_return(returns: list[float], periods_per_year: int) -> float:
+    def annualized_geometric_mean_return(
+        returns: list[float], periods_per_year: int
+    ) -> float:
         """
         Calculates the annualized geometric mean return.
 
         Args:
-            returns: A list of percentage returns (e.g., [0.05, 0.02, -0.03] for 5%, 2%, -3%).
-            periods_per_year: The number of periods in a year (e.g., 12 for monthly returns).
+            returns: A list of percentage returns
+                    (e.g., [0.05, 0.02, -0.03] for 5%, 2%, -3%).
+            periods_per_year:The number of periods in a year(e.g12 for monthly returns).
 
         Returns:
-            float: The annualized geometric mean return as a decimal (e.g., 0.04 for 4%).
+            float: The annualized geometric mean return as a decimal (e.g. 0.04 for 4%).
 
         Example:
             >>> returns = [0.01, 0.02, -0.01, 0.03, -0.02]  # Monthly returns
@@ -68,19 +80,23 @@ class RiskReturnEvaluator:
         """
         geometric_mean = RiskReturnEvaluator.geometric_mean_return(returns)
         return (1 + geometric_mean) ** periods_per_year - 1
-    
+
     @staticmethod
-    def arithmetic_mean_return(returns: list[float], probabilities: list[float] = None) -> float:
+    def arithmetic_mean_return(
+        returns: list[float], probabilities: list[float] = None
+    ) -> float:
         """
         Calculates the probability-weighted arithmetic mean return of a security.
 
         Args:
             returns: A list of returns for each possible outcome.
-            probabilities: A list of probabilities corresponding to each return. If None,
-                          all returns are assumed to have equal probability. Defaults to None.
+            probabilities: A list of probabilities corresponding to each return.If None,
+                          all returns are assumed to have equal probability. Defaults
+                          to None.
 
         Returns:
-            float: The probability-weighted arithmetic mean return as a decimal (e.g., 0.06 for 6%).
+            float: The probability-weighted arithmetic mean return as a decimal
+                   (e.g., 0.06 for 6%).
 
         Example:
             >>> returns = [0.10, 0.05, -0.02]  # Possible returns
@@ -92,22 +108,27 @@ class RiskReturnEvaluator:
             # Assume equally weighted probabilities
             probabilities = [1 / len(returns) for _ in range(len(returns))]
 
-        weighted_returns = [probabilities[i] * returns[i] for i in range(len(probabilities))]
+        weighted_returns = [
+            probabilities[i] * returns[i] for i in range(len(probabilities))
+        ]
         weighted_mean_return = sum(weighted_returns)
         return weighted_mean_return
 
     @staticmethod
-    def volatility(returns: list[float], probabilities: list[float] = None, time_period: int = 1) -> float:
+    def volatility(
+        returns: list[float], probabilities: list[float] = None, time_period: int = 1
+    ) -> float:
         """
-        Calculates the volatility of a security using the weighted standard deviation method,
-        scaled to a specific time period using the square root of time rule.
+        Calculates the volatility of a security using the weighted standard deviation
+        method,scaled to a specific time period using the square root of time rule.
 
         Args:
             returns: A list of historical returns for the security.
-            probabilities: A list of probabilities corresponding to each return. If None,
-                          all returns are assumed to have equal probability. Defaults to None.
-            time_period: The time period over which to calculate the volatility (e.g., 30 for 30 days).
-                        Defaults to 1 (no scaling).
+            probabilities: A list of probabilities corresponding to each return.If None,
+                          all returns are assumed to have equal probability. Defaults to
+                          None.
+            time_period: The time period over which to calculate the volatility
+                         (e.g., 30 for 30 days).Defaults to 1 (no scaling).
 
         Returns:
             float: The volatility measure, scaled to the specified time period.
@@ -122,5 +143,3 @@ class RiskReturnEvaluator:
         std_dev = desc_stats.std  # Standard deviation of returns
         scaled_volatility = std_dev * sqrt(time_period)  # Scale by square root of time
         return scaled_volatility
-    
-

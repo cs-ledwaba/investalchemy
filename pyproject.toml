@@ -1,0 +1,44 @@
+[project]
+name = "investalchemy"
+version = "0.1.0"
+description = "package for calculating common investments metrics at a security and portfolio level"
+authors = [
+    {name = "smanga", email = "ledwabaclement12@gmail.com"}
+]
+license = {text = "MIT"}
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "polars>=1.25.0,<2.0.0",
+    "numpy>=2.2.3,<3.0.0",
+    "statsmodels>=0.14.4,<0.15.0",
+    "black (>=25.1.0,<26.0.0)",
+    "pytest (>=8.3.5,<9.0.0)"
+]
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+
+# Linting and formatting configuration
+[tool.ruff]
+line-length = 88
+lint.select = [
+    "E",  # Pycodestyle errors
+    "F",  # Pyflakes
+    "I",  # Isort (import sorting)
+    "W",  # Pycodestyle warnings
+    "B",  # flake8-bugbear
+    "C",  # flake8-comprehensions
+    "UP", # pyupgrade
+]
+fix = true
+
+[tool.black]
+line-length = 88
+target-version = ["py312"]
+
+[tool.isort]
+profile = "black"
+line_length = 88
