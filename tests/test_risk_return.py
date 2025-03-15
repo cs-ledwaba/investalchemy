@@ -1,14 +1,19 @@
 import pytest
-from formulas.risk_return import RiskReturnEvaluator
+
+from investalchemy.risk_return import RiskReturnEvaluator
 
 # Create an instance of the class
 evaluator = RiskReturnEvaluator()
 
-@pytest.mark.parametrize("returns, expected", [
-    ([-0.1, 0.20, 0.3], 0.1198),  # Mixed returns
-    ([0.05, 0.02, -0.03], 0.0128),  # Small returns
-    ([0.0, 0.0, 0.0], 0.0),  # Zero returns
-])
+
+@pytest.mark.parametrize(
+    "returns, expected",
+    [
+        ([-0.1, 0.20, 0.3], 0.1198),  # Mixed returns
+        ([0.05, 0.02, -0.03], 0.0128),  # Small returns
+        ([0.0, 0.0, 0.0], 0.0),  # Zero returns
+    ],
+)
 def test_geometric_mean_return(returns, expected):
     """
     Test the geometric_mean_return method with various inputs.

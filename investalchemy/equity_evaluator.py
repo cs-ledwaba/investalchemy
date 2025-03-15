@@ -1,6 +1,7 @@
 class EquityEvaluator:
     """
-    A utility class for evaluating equity investments and performing related financial calculations.
+    A utility class for evaluating equity investments and performing related financial
+    calculations.
 
     This class provides methods to calculate:
     - Total return on a stock (including capital gains and dividends)
@@ -11,21 +12,26 @@ class EquityEvaluator:
     """
 
     @staticmethod
-    def return_on_stock(initial_price: float, current_price: float, dividend_payment: float) -> float:
+    def return_on_stock(
+        initial_price: float, current_price: float, dividend_payment: float
+    ) -> float:
         """
-        Calculates the total return on a stock, including capital gains and dividend yield.
+        Calculates the total return on a stock, including capital gains and dividend
+        yield.
 
         Args:
             initial_price: The initial price of the stock.
             current_price: The current price of the stock.
-            dividend_payment: The total dividend payment received during the holding period.
+            dividend_payment: The total dividend payment received during the holding
+                              period.
 
         Returns:
             float: The total return as a percentage (e.g., 10.5 for 10.5%).
 
         Example:
-            >>> EquityEvaluator.return_on_stock(100, 120, 5)  # Initial price $100, current price $120, dividend $5
-            25.0  # Total return of 25%
+            >>> EquityEvaluator.return_on_stock(100, 120, 5)
+                # Initial price R100, current price R120, dividend R5
+                25.0  # Total return of 25%
         """
         capital_gains = (current_price - initial_price) / initial_price
         dividend_yield = dividend_payment / initial_price
@@ -33,7 +39,9 @@ class EquityEvaluator:
         return total_return
 
     @staticmethod
-    def stock_valuation_dividend_discount_model(dividend_payment: float, r: float, t: int) -> float:
+    def stock_valuation_dividend_discount_model(
+        dividend_payment: float, r: float, t: int
+    ) -> float:
         """
         Calculates the present value of a stock using the Dividend Discount Model (DDM).
 
@@ -46,12 +54,13 @@ class EquityEvaluator:
             float: The present value of the stock.
 
         Example:
-            >>> EquityEvaluator.stock_valuation_dividend_discount_model(5, 0.05, 10)  # $5 dividend, 5% rate, 10 years
-            38.61  # Present value of ~$38.61
+            >>> EquityEvaluator.stock_valuation_dividend_discount_model(5, 0.05, 10)
+                # R5 dividend, 5% rate, 10 years
+                38.61  # Present value of ~R38.61
         """
         price = 0
         for i in range(1, t + 1):
-            price += dividend_payment / (1 + r)**i
+            price += dividend_payment / (1 + r) ** i
         return price
 
     @staticmethod
@@ -68,8 +77,9 @@ class EquityEvaluator:
             float: The present value of the stock.
 
         Example:
-            >>> EquityEvaluator.gordon_growth_model(5, 0.05, 0.02)  # $5 dividend, 5% rate, 2% growth
-            166.67  # Present value of ~$166.67
+            >>> EquityEvaluator.gordon_growth_model(5, 0.05, 0.02)
+                # R5 dividend, 5% rate, 2% growth
+                166.67  # Present value of ~R166.67
         """
         if r <= g:
             raise ValueError("Discount rate (r) must be greater than growth rate (g).")
@@ -88,7 +98,7 @@ class EquityEvaluator:
             float: The P/E ratio.
 
         Example:
-            >>> EquityEvaluator.price_to_earnings_ratio(100, 5)  # Price $100, EPS $5
+            >>> EquityEvaluator.price_to_earnings_ratio(100, 5)  # Price R100, EPS R5
             20.0  # P/E ratio of 20
         """
         if earnings_per_share <= 0:
@@ -108,7 +118,7 @@ class EquityEvaluator:
             float: The earnings yield as a decimal (e.g., 0.05 for 5%).
 
         Example:
-            >>> EquityEvaluator.earnings_yield(100, 5)  # Price $100, EPS $5
+            >>> EquityEvaluator.earnings_yield(100, 5)  # Price R100, EPS R5
             0.05  # Earnings yield of 5%
         """
         if earnings_per_share <= 0:
@@ -128,7 +138,7 @@ class EquityEvaluator:
             float: The dividend yield as a decimal (e.g., 0.03 for 3%).
 
         Example:
-            >>> EquityEvaluator.dividend_yield(3, 100)  # Dividend $3, price $100
+            >>> EquityEvaluator.dividend_yield(3, 100)  # Dividend R3, price R100
             0.03  # Dividend yield of 3%
         """
         if price <= 0:
@@ -141,17 +151,19 @@ class EquityEvaluator:
         Calculates the Net Present Value (NPV) of a series of cash flows.
 
         Args:
-            cash_flows: A list of cash flows (e.g., [-100, 50, 60, 70] for an initial investment of $100).
+            cash_flows: A list of cash flows (e.g., [-100, 50, 60, 70] for an initial
+                        investment of R100).
             r: The discount rate (e.g., 0.05 for 5%).
 
         Returns:
             float: The NPV of the cash flows.
 
         Example:
-            >>> EquityEvaluator.net_present_value([-100, 50, 60, 70], 0.05)  # Initial investment $100, cash flows $50, $60, $70
-            64.47  # NPV of ~$64.47
+            >>> EquityEvaluator.net_present_value([-100, 50, 60, 70], 0.05)
+                # Initial investment R100, cash flows R50, R60, R70
+                64.47  # NPV of ~R64.47
         """
         npv = 0
         for t, cash_flow in enumerate(cash_flows):
-            npv += cash_flow / (1 + r)**t
+            npv += cash_flow / (1 + r) ** t
         return npv
